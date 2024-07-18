@@ -38,6 +38,11 @@ public:
         node->next = prev->next;
         prev->next = node;
     }
+
+    void add(SinglyListNode *node, bool beforeHead) {
+        node->next = head;
+        head = node;
+    }
 };
 
 int main()
@@ -47,11 +52,13 @@ int main()
     SinglyListNode secondNode(13, nullptr);
     SinglyListNode thirdNode(98, nullptr);
     SinglyListNode fourthNode(71, nullptr);
+    SinglyListNode fifthNode(1, nullptr);
 
     list.add(&firstNode);
     list.add(&secondNode);
     list.add(&thirdNode);
     list.add(&fourthNode, &firstNode);
+    list.add(&fifthNode, true);
 
     SinglyListNode *iterator = list.head;
     while (iterator != nullptr) {
