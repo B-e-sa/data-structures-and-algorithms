@@ -34,37 +34,57 @@ public:
         currentNode->next = node;
     }
 
-    void add(SinglyListNode *node, SinglyListNode *prev) {
+    void add(SinglyListNode *node, SinglyListNode *prev)
+    {
         node->next = prev->next;
         prev->next = node;
     }
 
-    void add(SinglyListNode *node, bool beforeHead) {
+    void add(SinglyListNode *node, bool beforeHead)
+    {
         node->next = head;
         head = node;
+    }
+
+    void deleteNode(SinglyListNode *node)
+    {
+        SinglyListNode *currentNode = head;
+        while (currentNode->next != node)
+        {
+            if (currentNode == nullptr)
+                return;
+            currentNode = currentNode->next;
+        }
+        currentNode->next = currentNode->next->next;
+    }
+
+    void show()
+    {
+        SinglyListNode *iterator = head;
+        while (iterator != nullptr)
+        {
+            cout << iterator->value << "\n";
+            iterator = iterator->next;
+        }
     }
 };
 
 int main()
 {
     SinglyLinkedList list;
-    SinglyListNode firstNode(5, nullptr);
-    SinglyListNode secondNode(13, nullptr);
-    SinglyListNode thirdNode(98, nullptr);
-    SinglyListNode fourthNode(71, nullptr);
-    SinglyListNode fifthNode(1, nullptr);
+    SinglyListNode firstNode(1, nullptr);
+    SinglyListNode secondNode(2, nullptr);
+    SinglyListNode thirdNode(3, nullptr);
+    SinglyListNode fourthNode(4, nullptr);
+    SinglyListNode fifthNode(5, nullptr);
 
     list.add(&firstNode);
     list.add(&secondNode);
-    list.add(&thirdNode);
-    list.add(&fourthNode, &firstNode);
-    list.add(&fifthNode, true);
-
-    SinglyListNode *iterator = list.head;
-    while (iterator != nullptr) {
-        cout << iterator->value << "\n";
-        iterator = iterator->next;
-    }
+    list.add(&thirdNode); // > 1, 2, 3
+    list.add(&fourthNode, &firstNode); // > 1, 4, 2, 3 
+    list.add(&fifthNode, true); // > 5, 1, 4, 2, 3
+    list.deleteNode(&secondNode); // > 5, 1, 4, 3
+    list.show();
 
     return 0;
 }
