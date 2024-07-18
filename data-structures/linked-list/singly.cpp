@@ -33,6 +33,11 @@ public:
         }
         currentNode->next = node;
     }
+
+    void add(SinglyListNode *node, SinglyListNode *prev) {
+        node->next = prev->next;
+        prev->next = node;
+    }
 };
 
 int main()
@@ -46,11 +51,11 @@ int main()
     list.add(&firstNode);
     list.add(&secondNode);
     list.add(&thirdNode);
-    list.add(&fourthNode);
+    list.add(&fourthNode, &firstNode);
 
     SinglyListNode *iterator = list.head;
     while (iterator != nullptr) {
-        cout << iterator->value;
+        cout << iterator->value << "\n";
         iterator = iterator->next;
     }
 
