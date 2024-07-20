@@ -31,26 +31,26 @@ public:
     void insert(int key)
     {
         int index = hash(key);
+        int bucketSize = bucketSizes[index];
+        int *currentTable = table[index];
 
-        if (bucketSizes[index] == BUCKET_SIZE)
+        if (bucketSize == BUCKET_SIZE)
             return;
 
-        if (bucketSizes[index] == 0)
+        if (bucketSize == 0)
         {
-            table[index][0] = key;
+            currentTable[0] = key;
             bucketSizes[index]++;
             return;
         }
 
-        for (int i = 0; i < bucketSizes[index]; i++)
+        for (int i = 0; i < bucketSize; i++)
         {
-            if (table[index][i] == key)
-            {
+            if (currentTable[i] == key)
                 return;
-            }
         }
 
-        table[index][bucketSizes[index]] = key;
+        currentTable[bucketSize] = key;
     }
 
     void show()
@@ -61,10 +61,8 @@ public:
             for (int j = 0; j < this->BUCKET_SIZE; j++)
             {
                 if (this->table[i][j] == -1)
-                {
                     continue;
-                };
-                cout << this->table[i][j] << "\n";
+                cout << "  " << this->table[i][j] << "\n";
             }
         }
     }
