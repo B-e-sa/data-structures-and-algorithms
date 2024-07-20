@@ -38,26 +38,19 @@ public:
         if (bucketSizes[index] == 0)
         {
             table[index][0] = key;
-            bucketSizes[0]++;
+            bucketSizes[index]++;
             return;
         }
 
         for (int i = 0; i < bucketSizes[index]; i++)
         {
-
-            cout << table[index][i];
-
             if (table[index][i] == key)
             {
                 return;
             }
-            else if (table[index][i] == -1)
-            {
-                table[index][i] = key;
-                bucketSizes[index]++;
-                return;
-            }
         }
+
+        table[index][bucketSizes[index]] = key;
     }
 
     void show()
@@ -82,7 +75,8 @@ int main()
     HashSet hs;
     hs.insert(5);
     hs.insert(10);
-    // hs.show();
+    hs.insert(4);
+    hs.show(); // 5, 10, 4
 
     return 0;
 }
