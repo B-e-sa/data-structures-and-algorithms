@@ -48,6 +48,12 @@ public:
 
     void deleteNode(SinglyListNode *node)
     {
+        if (node == head)
+        {
+            head = head->next;
+            return;
+        }
+
         SinglyListNode *currentNode = head;
         while (currentNode->next != node)
         {
@@ -67,23 +73,38 @@ public:
             iterator = iterator->next;
         }
     }
+
+    int contains(int value)
+    {
+        SinglyListNode *iterator = head;
+        while (iterator != nullptr)
+        {
+            if (iterator->value == value)
+                return true;
+            iterator = iterator->next;
+        }
+
+        return false;
+    }
 };
 
 int main()
 {
     SinglyLinkedList list;
-    SinglyListNode firstNode(1, nullptr);
-    SinglyListNode secondNode(2, nullptr);
-    SinglyListNode thirdNode(3, nullptr);
-    SinglyListNode fourthNode(4, nullptr);
-    SinglyListNode fifthNode(5, nullptr);
+    SinglyListNode firstNode(1);
+    SinglyListNode secondNode(2);
+    SinglyListNode thirdNode(3);
+    SinglyListNode fourthNode(4);
+    SinglyListNode fifthNode(5);
 
     list.add(&firstNode);
     list.add(&secondNode);
-    list.add(&thirdNode); // > 1, 2, 3
-    list.add(&fourthNode, &firstNode); // > 1, 4, 2, 3 
-    list.add(&fifthNode, true); // > 5, 1, 4, 2, 3
-    list.deleteNode(&secondNode); // > 5, 1, 4, 3
+    list.add(&thirdNode);              // > 1, 2, 3
+    list.add(&fourthNode, &firstNode); // > 1, 4, 2, 3
+    list.add(&fifthNode, true);        // > 5, 1, 4, 2, 3
+    list.deleteNode(&secondNode);      // > 5, 1, 4, 3
+    list.contains(4);                  // true
+    list.contains(10);                 // false
     list.show();
 
     return 0;
