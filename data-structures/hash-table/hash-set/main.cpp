@@ -51,30 +51,16 @@ public:
         }
 
         currentTable[bucketSize] = key;
-    }
-
-    void show()
-    {
-        for (int i = 0; i < this->BUCKET_COUNT; i++)
-        {
-            cout << i << ":\n";
-            for (int j = 0; j < this->BUCKET_SIZE; j++)
-            {
-                if (this->table[i][j] == -1)
-                    continue;
-                cout << "  " << this->table[i][j] << "\n";
-            }
-        }
+        bucketSizes[index]++;
     }
 };
 
 int main()
 {
     HashSet hs;
-    hs.insert(5);
-    hs.insert(10);
-    hs.insert(4);
-    hs.show(); // 5, 10, 4
+    hs.insert(5);  // [5]
+    hs.insert(10); // [5, 10]
+    hs.insert(4);  // [5,10,4]
 
     return 0;
 }
