@@ -2,60 +2,73 @@
 
 using namespace std;
 
-class SinglyListNode
+class Node
 {
 public:
-    SinglyListNode(int value, SinglyListNode *next = nullptr)
+    Node(int val, Node *next = nullptr)
     {
         this->next = next;
-        this->value = value;
+        this->val = val;
     }
-    int value;
-    SinglyListNode *next;
+    int val;
+    Node *next;
 };
 
 class SinglyLinkedList
 {
 public:
-    SinglyListNode *head = nullptr;
-    void add(SinglyListNode *node)
+    Node *head = nullptr;
+    void add(int val)
     {
+        Node *n = new Node(val);
         if (head == nullptr)
         {
-            head = node;
+            head = n;
             return;
         }
 
-        SinglyListNode *currentNode = head;
+        Node *currentNode = head;
         while (currentNode->next != nullptr)
         {
             currentNode = currentNode->next;
         }
-        currentNode->next = node;
+        currentNode->next = n;
     }
 
-    void add(SinglyListNode *node, SinglyListNode *prev)
+    void addBefore(int val, int prev)
     {
-        node->next = prev->next;
-        prev->next = node;
+        Node *currentNode = head;
+        while (currentNode->next != nullptr)
+        {
+            if (currentNode->val == prev)
+            {
+                Node *n = new Node(val);
+                n->next = currentNode->next;
+                currentNode->next = n;
+                break;
+            }
+
+            currentNode = currentNode->next;
+        }
     }
 
-    void add(SinglyListNode *node, bool beforeHead)
+    void addBeforeHead(int val)
     {
-        node->next = head;
-        head = node;
+        Node *n = new Node(val);
+        n->next = head;
+        head = n;
     }
 
-    void deleteNode(SinglyListNode *node)
+    void deleteNode(int val)
     {
-        if (node == head)
+        if (val == head->val)
         {
             head = head->next;
             return;
         }
 
-        SinglyListNode *currentNode = head;
-        while (currentNode->next != node)
+        Node *currentNode = head;
+        while (currentNode->next->val != val)
         {
             if (currentNode == nullptr)
                 return;
@@ -66,20 +79,20 @@ public:
 
     void show()
     {
-        SinglyListNode *iterator = head;
+        Node *iterator = head;
         while (iterator != nullptr)
         {
-            cout << iterator->value << "\n";
+            cout << iterator->val << "\n";
             iterator = iterator->next;
         }
     }
 
-    int contains(int value)
+    int contains(int val)
     {
-        SinglyListNode *iterator = head;
+        Node *iterator = head;
         while (iterator != nullptr)
         {
-            if (iterator->value == value)
+            if (iterator->val == val)
                 return true;
             iterator = iterator->next;
         }
@@ -91,21 +104,16 @@ public:
 int main()
 {
     SinglyLinkedList list;
-    SinglyListNode firstNode(1);
-    SinglyListNode secondNode(2);
-    SinglyListNode thirdNode(3);
-    SinglyListNode fourthNode(4);
-    SinglyListNode fifthNode(5);
+    Node fourthNode(4);
+    Node fifthNode(5);
 
-    list.add(&firstNode);
-    list.add(&secondNode);
-    list.add(&thirdNode);              // > 1, 2, 3
-    list.add(&fourthNode, &firstNode); // > 1, 4, 2, 3
-    list.add(&fifthNode, true);        // > 5, 1, 4, 2, 3
-    list.deleteNode(&secondNode);      // > 5, 1, 4, 3
-    list.contains(4);                  // true
-    list.contains(10);                 // false
-    list.show();
+    list.add(1);
+    list.add(2);
+    list.addBefore(4, 1);  // > 1, 4, 2
+    list.addBeforeHead(5); // > 5, 1, 4, 2
+    list.deleteNode(2);    // > 5, 1, 4
+    list.contains(4);      // true
+    list.contains(10);     // false
 
     return 0;
 }
