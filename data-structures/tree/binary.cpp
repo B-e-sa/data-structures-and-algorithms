@@ -15,11 +15,11 @@ using namespace std;
 class Node
 {
 public:
-    Node *leftNode = nullptr;
-    Node *rightNode = nullptr;
+    Node *leftNode;
+    Node *rightNode;
     int value;
 
-    Node(int value, Node *leftNode = nullptr, Node *rightNode = nullptr)
+    Node(int value = -1, Node *leftNode = nullptr, Node *rightNode = nullptr)
     {
         this->value = value;
         this->leftNode = leftNode;
@@ -31,6 +31,21 @@ class Tree
 {
 public:
     Node *root = nullptr;
+
+    bool contains(int value)
+    {
+        Node *currentNode = root;
+        while (currentNode != nullptr)
+        {
+            if (value < currentNode->value)
+                currentNode = currentNode->leftNode;
+            else if (value > currentNode->value)
+                currentNode = currentNode->rightNode;
+            else
+                return true;
+        }
+        return false;
+    }
 
     void add(int value)
     {
@@ -75,10 +90,12 @@ int main()
     tree->add(10);
     tree->add(3);
 
-    // tree representation
+    // final tree representation
     //    (5)
     //    / \
     // (2) (10)
     //   \
     //  (3)
+
+    tree->contains(5); // true
 }
