@@ -37,13 +37,6 @@ public:
         if (bucketSize == BUCKET_SIZE)
             return;
 
-        if (bucketSize == 0)
-        {
-            currentTable[0] = key;
-            bucketSizes[index]++;
-            return;
-        }
-
         for (int i = 0; i < bucketSize; i++)
         {
             if (currentTable[i] == key)
