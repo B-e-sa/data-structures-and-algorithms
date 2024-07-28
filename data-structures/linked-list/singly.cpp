@@ -104,14 +104,11 @@ public:
 int main()
 {
     SinglyLinkedList list;
-    Node fourthNode(4);
-    Node fifthNode(5);
-
     list.add(1);
     list.add(2);
-    list.addBefore(4, 1);  // > 1, 4, 2
-    list.addBeforeHead(5); // > 5, 1, 4, 2
-    list.deleteNode(2);    // > 5, 1, 4
+    list.addBefore(4, 1);  // 1, 4, 2
+    list.addBeforeHead(5); // 5, 1, 4, 2
+    list.deleteNode(2);    // 5, 1, 4
     list.contains(4);      // true
     list.contains(10);     // false
 
